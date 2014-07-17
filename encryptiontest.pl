@@ -43,28 +43,28 @@ my $bigstring = '';
 # 
 for my $count (0..1000){
 
-	# make some data to encrypt
-	my $plaintext = MakeText();
+    # make some data to encrypt
+    my $plaintext = MakeText();
 
-	# save it for a big string test later
-	$bigstring .= $plaintext;
+    # save it for a big string test later
+    $bigstring .= $plaintext;
 
     # keep track of the data we are handling
-	$data += length($plaintext);
+    $data += length($plaintext);
 
     # encrypt the plaintext
     my $ciphertext = $blowfish->Encrypt($plaintext);
-	
-	# and then decrypt it
+    
+    # and then decrypt it
     my $result = $blowfish2->Decrypt($ciphertext);
 
     # report the results
     if($plaintext eq $result){
-    	print "\b\b\b\b\b\b\b\b$count";
+        print "\b\b\b\b\b\b\b\b$count";
     }
     else{
-    	print "\nplaintxt = $plaintext\n". $result;
-    	die "\ndid not match!";
+        print "\nplaintxt = $plaintext\n". $result;
+        die "\ndid not match!";
     }
 
 }
@@ -77,10 +77,10 @@ my $result = $blowfish2->Decrypt($ciphertext);
 
 # report the results
 if($bigstring eq $result){
-	print("Success!\n")
+    print("Success!\n")
 }
 else{
-	die "\nbigtext failed!";
+    die "\nbigtext failed!";
 }
 
 # do some calculations for stats
@@ -91,42 +91,42 @@ $data = Format($data*2);
 print "\nTunneled ${data}s in $time seconds at a rate of $rate/s\n";
 
 sub Format{
-	my $rate = shift;
+    my $rate = shift;
 
-	if($rate < 1024){ # bytes
+    if($rate < 1024){ # bytes
 
-		$rate = sprintf ("%.2f", $rate);
-		$rate .= " B";
-		return $rate;
-	}
-	elsif($rate < 1048576){ #kilobytes
+        $rate = sprintf ("%.2f", $rate);
+        $rate .= " B";
+        return $rate;
+    }
+    elsif($rate < 1048576){ #kilobytes
 
-		$rate = sprintf ("%.2f", $rate/1024);
-		$rate .= " KB";
-		return $rate;
-	}
-	elsif($rate < 1073741824){ # megabytes
+        $rate = sprintf ("%.2f", $rate/1024);
+        $rate .= " KB";
+        return $rate;
+    }
+    elsif($rate < 1073741824){ # megabytes
 
-		$rate = sprintf ("%.2f", $rate/1048576);
-		$rate .= " MB";
-		return $rate;
-	}
-	else{ # gigabytes
+        $rate = sprintf ("%.2f", $rate/1048576);
+        $rate .= " MB";
+        return $rate;
+    }
+    else{ # gigabytes
 
-		$rate = sprintf ("%.2f", $rate/1073741824);
-		$rate .= " GB";
-		return $rate;
-	}
+        $rate = sprintf ("%.2f", $rate/1073741824);
+        $rate .= " GB";
+        return $rate;
+    }
 }
 
 sub MakeText{
 
-	my $random = '';
+    my $random = '';
 
-	for my $count (0..20){
-		$random .= md5_base64(encode_base64(int rand(100000)));
-	}
-	
+    for my $count (0..20){
+        $random .= md5_base64(encode_base64(int rand(100000)));
+    }
+    
     return $random;
 }
 
